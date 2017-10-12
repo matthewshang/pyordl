@@ -1,8 +1,7 @@
 import numpy as np
 from net import Net
-from layers import (Linear, Relu, Softmax)
-import load_spiral as spiral
-import visualize_spiral as vspiral
+from layers import Linear, Relu, Softmax
+import spiral
 
 def main():
 
@@ -31,7 +30,7 @@ def main():
         if i % 100 == 0:
             print("iter {} cost: {}".format(i, cost))
     
-    vspiral.plot(data, labels, n)
+    spiral.plot(data, labels, n)
 
 if __name__ == '__main__':
     main()
