@@ -12,11 +12,8 @@ class Net:
     def forward(self, input):
         self.outputs = []
         self.outputs.append(input)
-        for i, l in enumerate(self.layers):
-            if i == 0:
-                out = l.forward(input)
-            else:
-                out = l.forward(self.outputs[-1])
+        for l in self.layers:
+            out = l.forward(self.outputs[-1])
             self.outputs.append(out)
 
         return self.outputs[-1]
@@ -24,6 +21,7 @@ class Net:
     def backprop(self, labels):
         total_loss = 0.0
         gradient = None
+        out = self.outputs[-1]
 
         for l in reversed(self.layers):
             output = self.outputs.pop()
@@ -35,6 +33,7 @@ class Net:
             total_loss += loss
             gradient = new_grad
 
+        total_loss += self.layers[-1].get_loss(out, labels)
         return total_loss
 
     def update(self, reg, step_size):
