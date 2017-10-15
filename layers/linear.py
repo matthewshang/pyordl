@@ -18,7 +18,7 @@ class Linear(Layer):
         new_grad = np.dot(gradient, self.W.T)
         return new_grad, 0.5 * self.reg * np.sum(self.W * self.W)
 
-    def update(self, reg, step_size):
+    def update(self, step_size):
         self.dW += self.reg * self.W
         self.W += -step_size * self.dW
         self.b += -step_size * self.db

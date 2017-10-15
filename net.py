@@ -6,7 +6,7 @@ class Net:
         self.layers = []
         self.outputs = []
     
-    def add_layer(self, layer):
+    def add(self, layer):
         self.layers.append(layer)
 
     def forward(self, input):
@@ -36,9 +36,9 @@ class Net:
         total_loss += self.layers[-1].get_loss(out, labels)
         return total_loss
 
-    def update(self, reg, step_size):
+    def update(self, step_size):
         for l in self.layers:
-            l.update(reg, step_size)
+            l.update(step_size)
 
     def predict(self, input):
         output = self.forward(input)

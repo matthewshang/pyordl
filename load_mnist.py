@@ -3,9 +3,7 @@ import gzip
 import os
 
 import numpy as np
-import matplotlib as mpl
-mpl.use('TkAgg')
-import matplotlib.pyplot as plt
+from util import plt, mpl
 
 def load():
     dir = os.path.dirname(__file__)

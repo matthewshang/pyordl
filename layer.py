@@ -5,5 +5,5 @@ class Layer:
     def backward(self, input, output, gradient):
         pass
 
-    def update(self, reg, step_size):
+    def update(self, step_size):
         pass

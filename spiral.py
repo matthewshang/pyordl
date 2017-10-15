@@ -1,5 +1,5 @@
 import numpy as np
-from util.macos_mpl import plt
+from util import plt
 
 def load(num, dims, classes):
     data = np.zeros((num * classes, dims))
