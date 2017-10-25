@@ -1,4 +1,5 @@
 import numpy as np
+from timeit import default_timer as timer
 from net import Net
 from layers import Linear, Relu, Softmax
 import util
@@ -21,7 +22,7 @@ def main():
     reg = 1e-3
     step_size = 1e-1
     batch_size = 64
-    epochs = 300
+    epochs = 50
     n = Net()
     n.add(Linear(784, 50))
     n.add(Relu())
@@ -32,7 +33,8 @@ def main():
     # train_costs = []
     train_accuracies = []
     val_accuracies = []
-
+    
+    start = timer()
     for i in range(epochs):
         for data, labels in minibatch(train_data, one_hot, 128):
             out = n.forward(data)
@@ -48,11 +50,13 @@ def main():
         if i % 10 == 0:
             print("iter {} cost: {}".format(i, loss))
     
+    total_time = timer() - start
+    print('total time: {}s, time per epoch: {}s'.format(total_time, total_time / epochs))
     accuracy = np.mean(n.predict(test[0]) == test[1])
     print("test accuracy: {}".format(accuracy))
 
     plt.plot(range(0, epochs), val_accuracies, c='b', label='val accuracy')
-    plt.plot(range(0, epochs), train_accuracies, c='g', label='train accuracy')    
+    plt.plot(range(0, epochs), train_accuracies, c='g', label='train accuracy')
     plt.legend(loc='upper left')
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
