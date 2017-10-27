@@ -18,7 +18,7 @@ def main():
     train_data = train[0]
     train_labels = train[1]
     one_hot = util.to_categorical(train_labels)
-    
+
     reg = 1e-3
     step_size = 1e-1
     batch_size = 64
@@ -33,12 +33,12 @@ def main():
     # train_costs = []
     train_accuracies = []
     val_accuracies = []
-    
+
     start = timer()
     for i in range(epochs):
         for data, labels in minibatch(train_data, one_hot, 128):
             out = n.forward(data)
-            loss = n.backprop(labels)     
+            loss = n.backprop(labels)
             n.update(step_size)
 
         val_accuracy = np.mean(n.predict(val[0]) == val[1])
@@ -49,18 +49,18 @@ def main():
 
         if i % 10 == 0:
             print("iter {} cost: {}".format(i, loss))
-    
+
     total_time = timer() - start
     print('total time: {}s, time per epoch: {}s'.format(total_time, total_time / epochs))
     accuracy = np.mean(n.predict(test[0]) == test[1])
     print("test accuracy: {}".format(accuracy))
 
-    plt.plot(range(0, epochs), val_accuracies, c='b', label='val accuracy')
-    plt.plot(range(0, epochs), train_accuracies, c='g', label='train accuracy')
-    plt.legend(loc='upper left')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.show()
+    # plt.plot(range(0, epochs), val_accuracies, c='b', label='val accuracy')
+    # plt.plot(range(0, epochs), train_accuracies, c='g', label='train accuracy')
+    # plt.legend(loc='upper left')
+    # plt.xlabel('Epoch')
+    # plt.ylabel('Accuracy')
+    # plt.show()
     # recog_demo(n, test)
 
 def recog_demo(net, data):

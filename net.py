@@ -5,7 +5,7 @@ class Net:
     def __init__(self):
         self.layers = []
         self.outputs = []
-        
+
     def add(self, layer):
         self.layers.append(layer)
 
