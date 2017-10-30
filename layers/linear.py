@@ -2,14 +2,20 @@ import numpy as np
 from layer import Layer
 
 class Linear(Layer):
-    def __init__(self, input_size, output_size, reg=1e-3):
-        self.W = 0.01 * np.random.randn(input_size, output_size)
-        self.b = np.zeros((1, output_size))
+    def __init__(self, output_size, input_size=0, reg=1e-3):
+        self.W = None
+        self.b = None
         self.dW = None
         self.db = None
         self.reg = reg
+        self.input_size = input_size
+        self.output_size = output_size
 
     def forward(self, input):
+        if self.W is None:
+            self.W = 0.01 * np.random.randn(self.input_size, self.output_size)
+        if self.b is None:
+            self.b = np.zeros((1, self.output_size))
         return np.dot(input, self.W) + self.b
 
     def backward(self, input, output, gradient):

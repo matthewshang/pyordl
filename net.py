@@ -9,6 +9,19 @@ class Net:
     def add(self, layer):
         self.layers.append(layer)
 
+    def compile(self):
+        for i, l in enumerate(self.layers):
+            if i == 0:
+                if l.input_size == 0:
+                    print("First layer's input size must be specified")
+                continue
+            l.input_size = self.layers[i-1].output_size
+            if l.output_size == 0:
+                l.output_size = l.input_size
+
+        for l in self.layers:
+            print('({}, {})'.format(l.input_size, l.output_size))
+
     def forward(self, input):
         self.outputs = []
         self.outputs.append(input)

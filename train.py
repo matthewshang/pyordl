@@ -22,17 +22,18 @@ def main():
     reg = 1e-3
     step_size = 1e-1
     batch_size = 64
-    epochs = 50
+    epochs = 30
     n = Net()
-    n.add(Linear(784, 50))
+    n.add(Linear(50, input_size=784))
     n.add(Relu())
-    n.add(Linear(50, 10))
+    n.add(Linear(10))
     n.add(Softmax())
 
-    # batch_costs = []
-    # train_costs = []
+    n.compile()
+    minibatch_losses = []
     train_accuracies = []
     val_accuracies = []
+    iters = 0
 
     start = timer()
     for i in range(epochs):
@@ -40,6 +41,8 @@ def main():
             out = n.forward(data)
             loss = n.backprop(labels)
             n.update(step_size)
+            minibatch_losses.append(loss)
+            iters += 1
 
         val_accuracy = np.mean(n.predict(val[0]) == val[1])
         val_accuracies.append(val_accuracy)
@@ -55,6 +58,8 @@ def main():
     accuracy = np.mean(n.predict(test[0]) == test[1])
     print("test accuracy: {}".format(accuracy))
 
+    plt.plot(range(0, iters), minibatch_losses, linewidth=0.5, c='b') 
+    plt.show()
     # plt.plot(range(0, epochs), val_accuracies, c='b', label='val accuracy')
     # plt.plot(range(0, epochs), train_accuracies, c='g', label='train accuracy')
     # plt.legend(loc='upper left')
